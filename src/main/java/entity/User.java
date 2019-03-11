@@ -21,6 +21,30 @@ public class User {
     private Integer AccountId;
     @JsonProperty("AboutMe")
     private String AboutMe;
+    @JsonProperty("WebsiteUrl")
+    private String WebsiteUrl;
+    @JsonProperty("LastAccessDate")
+    private String LastAccessDate;
+    @JsonProperty("UpVotes")
+    private Integer UpVotes;
+    @JsonProperty("ProfileImageUrl")
+    private String ProfileImageUrl;
+    @JsonProperty("Id")
+    private Integer Id;
+    @JsonProperty("Reputation")
+    private Integer Reputation;
+    @JsonProperty("DownVotes")
+    private Integer DownVotes;
+    @JsonProperty("Location")
+    private String Location;
+    @JsonProperty("DisplayName")
+    private String DisplayName;
+
+    public static final User fromJsonDoc(String jsonDoc) throws IOException {
+//        mapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,true);
+        return mapper.readValue(jsonDoc, User.class);
+//        return mapper.treeToValue(rootNode, User.class);
+    }
 
     public String getCreationDate() {
         return CreationDate;
@@ -117,31 +141,6 @@ public class User {
     public void setLocation(String location) {
         Location = location;
     }
-    @JsonProperty("WebsiteUrl")
-    private String WebsiteUrl;
-    @JsonProperty("LastAccessDate")
-    private String LastAccessDate;
-    @JsonProperty("UpVotes")
-    private Integer UpVotes;
-    @JsonProperty("ProfileImageUrl")
-    private String ProfileImageUrl;
-    @JsonProperty("Id")
-    private Integer Id;
-    @JsonProperty("Reputation")
-    private Integer Reputation;
-    @JsonProperty("DownVotes")
-    private  Integer DownVotes;
-    @JsonProperty("Location")
-    private String Location;
-
-    @JsonProperty("DisplayName")
-    private String DisplayName;
-
-    public static final User fromJsonDoc(String jsonDoc) throws IOException {
-//        mapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,true);
-        return mapper.readValue(jsonDoc,User.class);
-//        return mapper.treeToValue(rootNode, User.class);
-    }
 
     @Override
     public String toString() {
@@ -167,5 +166,24 @@ public class User {
 
     public void setDisplayName(String displayName) {
         DisplayName = displayName;
+    }
+
+    public String toCustomString(){
+        return toCustomString("|");
+    }
+    public String toCustomString(String splitter){
+        return this.getCreationDate()+splitter+
+                this.getViews()+splitter +
+                this.getAccountId()+splitter+
+                this.getAboutMe()+splitter+
+                this.getWebsiteUrl()+splitter+
+                this.getLastAccessDate()+splitter+
+                this.getUpVotes()+splitter+
+                this.getProfileImageUrl()+splitter+
+                this.getId()+splitter+
+                this.getReputation()+splitter+
+                this.getDownVotes()+splitter+
+                this.getLocation()+splitter+
+                this.getDisplayName();
     }
 }
