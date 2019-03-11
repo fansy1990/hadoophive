@@ -9,6 +9,7 @@ package demo;
 
 import entity.User;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
@@ -32,9 +33,11 @@ public class ReadJSONAndFilter {
         private NullWritable nullWritable = NullWritable.get();
 
         private static final ObjectMapper mapper = new ObjectMapper();
+
         public void map(Object key, Text value, Context context
         ) throws IOException, InterruptedException {
            User user =  mapper.readValue(value.toString(), User.class);
+           // 添加过滤条件
            if(user.getViews() >= 2 && user.getReputation() >= 20 ){
                jsonLine.set(user.toCustomString());
                context.write(jsonLine, nullWritable);
@@ -45,14 +48,10 @@ public class ReadJSONAndFilter {
             extends Reducer<Text,NullWritable,Text,NullWritable> {
         private IntWritable result = new IntWritable();
 
-        public void reduce(Text key, Iterable<IntWritable> values,
+        public void reduce(Text key, Iterable<NullWritable> values,
                            Context context
         ) throws IOException, InterruptedException {
-            int sum = 0;
-            for (IntWritable val : values) {
-                sum += val.get();
-            }
-            result.set(sum);
+
             context.write(key, NullWritable.get());
         }
     }
@@ -63,13 +62,12 @@ public class ReadJSONAndFilter {
         job.setJarByClass(ReadJSONAndFilter.class);
         job.setMapperClass(JsonMapper.class);
         job.setReducerClass(FormatReducer.class);
-        job.setOutputKeyClass(NullWritable.class);
-        job.setOutputValueClass(Text.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(NullWritable.class);
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        FileSystem.get(conf).delete(new Path(args[1]),true);
         System.exit(job.waitForCompletion(true) ? 0 : 1);
-
-
 
     }
 }

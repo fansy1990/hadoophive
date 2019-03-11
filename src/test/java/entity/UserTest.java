@@ -9,9 +9,12 @@ import java.io.IOException;
  */
 public class UserTest {
     public static void main(String[] args) throws IOException {
-        String aaa ="{\"CreationDate\":\"2016-01-11T22:16:10.830\",\"Views\":0,\"AccountId\":-1,\"AboutMe\":\"<p>Hi, I'm not really a person.<\\/p>\\r\\n<p>I'm a background process that helps keep this site clean!<\\/p>\\r\\n<p>I do things like<\\/p>\\r\\n<ul>\\r\\n<li>Randomly poke old unanswered questions every hour so they get some attention<\\/li>\\r\\n<li>Own community questions and answers so nobody gets unnecessary reputation from them<\\/li>\\r\\n<li>Own downvotes on spam/evil posts that get permanently deleted<\\/li>\\r\\n<li>Own suggested edits from anonymous users<\\/li>\\r\\n<li><a href=\\\"http://meta.stackoverflow.com/a/92006\\\">Remove abandoned questions<\\/a><\\/li>\\r\\n<\\/ul>\",\"DisplayName\":\"Community\",\"Id\":-1,\"Reputation\":1,\"LastAccessDate\":\"2016-01-11T22:16:10.830\",\"DownVotes\":1327,\"UpVotes\":46,\"Location\":\"on the server farm\"}";
+        String aaa ="{\"CreationDate\":\"2016-01-12T18:02:28.700\",\"Views\":243,\"AccountId\":34933,\"AboutMe\":\"<p><a href=\\\"http://blog.stackoverflow.com/2010/04/welcome-stack-overflow-valued-associate-00005/\\\">Stack Exchange Valued Associate #00005<\\/a><\\/p>\\n\\n<p>I am the Director of Community Development for the Stack Exchange Network.<\\/p>\\n\\n<p>I can be reached at<br>\\n<b>&#114;&#99;&#97;&#114;&#116;&#97;&#105;&#110;&#111;&#64;&#115;&#116;&#97;&#99;&#107;&#101;&#120;&#99;&#104;&#97;&#110;&#103;&#101;&#46;&#99;&#111;&#109;<\\/b><\\/p>\\n\",\"DisplayName\":\"Robert Cartaino\",\"Id\":1,\"Reputation\":101,\"LastAccessDate\":\"2018-07-27T20:45:16.343\",\"DownVotes\":14,\"UpVotes\":0,\"ProfileImageUrl\":\"https://www.gravatar.com/avatar/2cf2eee5993f6cf3b0b149c2f8c5a323?s=128&d=identicon&r=PG\",\"Location\":\"Palm Bay, FL\"} ";
 //        ObjectMapper mapper = new ObjectMapper();
         User u = User.fromJsonDoc(aaa);
         System.out.println(User.fromJsonDoc(aaa));
+        System.out.println();
+        System.out.println(u.toCustomString());
+
     }
 }

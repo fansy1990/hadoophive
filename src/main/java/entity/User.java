@@ -71,10 +71,13 @@ public class User {
     }
 
     public String getAboutMe() {
-        return AboutMe;
+//        AboutMe = AboutMe.replaceAll("\n","");
+        if(AboutMe == null) return null;
+        return AboutMe.replaceAll("\n","");
     }
 
     public void setAboutMe(String aboutMe) {
+//        aboutMe = aboutMe.replaceAll("\n","");
         AboutMe = aboutMe;
     }
 
